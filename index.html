@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Portal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background-color: #f394c0;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #333;
+    }
+    nav a {
+      color: white;
+      padding: 1rem;
+      text-decoration: none;
+      text-align: center;
+    }
+    nav a:hover {
+      background-color: #f394c0;
+    }
+    .container {
+      padding: 2rem;
+      text-align: center;
+    }
+    .intro-box {
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      padding: 1.5rem;
+      border-radius: 5px;
+      max-width: 600px;
+      margin: 1rem auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .info-box {
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      padding: 1rem;
+      border-radius: 5px;
+      margin-top: 1rem;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>EmpowerHer: Your Period Companion</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="logs.html">Logs</a>
+    <a href="healthtips.html">Health Tips</a>
+    <a href="healthcheckup.html">Health Check</a>
+    <a href="chatbot.html">Chatbot</a>
+  </nav>
+
+  <div class="container">
+    <div class="intro-box">
+      <h2>Welcome to EmpowerHer</h2>
+      <p>EmpowerHer is your trusted companion for menstrual health and wellness. Designed to support you every step of the way, our platform offers valuable insights, health tips, and tools to help you track your cycle and stay informed. Whether you're looking to monitor your cycle, find expert tips on fitness and nutrition, or consult with our chatbot, EmpowerHer is here to guide you toward a healthier and more empowered life.</p>
+    </div>
+
+    <img src="homepage.png" alt="Health Image" style="margin: 1rem auto; display: block; max-width: 100%; height: auto;"/>
+    <h2>Stay Healthy and Informed</h2>
+    <p>Explore our resources to help you stay in top shape!</p>
+    
+    <div class="info-box" id="periodInfo">
+      <!-- Period information will be displayed here -->
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 EmpowerHer. All rights reserved.</p>
+    <div>
+      <a href="privacy.html" style="color: white; margin: 0 1rem; text-decoration: none;">Privacy Policy</a>
+      <a href="terms.html" style="color: white; margin: 0 1rem; text-decoration: none;">Terms of Service</a>
+    </div>
+    <div style="margin-top: 0.5rem;">
+      <a href="https://facebook.com" target="_blank" style="color: white; margin: 0 0.5rem; text-decoration: none;">Facebook</a>
+      <a href="https://twitter.com" target="_blank" style="color: white; margin: 0 0.5rem; text-decoration: none;">Twitter</a>
+      <a href="https://instagram.com" target="_blank" style="color: white; margin: 0 0.5rem; text-decoration: none;">Instagram</a>
+    </div>
+  </footer>
+
+  <script src="data/scripts.js"></script>
+  <script>
+    function displayPeriodInfo() {
+      const logs = getLogs(); // Fetch logs from local storage
+      
+      if (logs.length === 0) {
+        document.getElementById("periodInfo").innerText = "No logs available. Please add a period log.";
+        return;
+      }
+
+      // Get the most recent log date (last period)
+      const lastPeriodDate = new Date(logs[0]); // Take the most recent log from the start of the array
+      const today = new Date();
+
+      // Calculate days left until next expected period (assuming a 28-day cycle)
+      const nextPeriodDate = new Date(lastPeriodDate);
+      nextPeriodDate.setDate(lastPeriodDate.getDate() + 27); // Next period expected in 28 days
+      const daysLeft = Math.ceil((nextPeriodDate - today) / (1000 * 60 * 60 * 24)); // Days difference
+
+      // Display result
+      document.getElementById("periodInfo").innerHTML = `
+        <h3>Next Period Information</h3>
+        <p>Last recorded period: ${lastPeriodDate.toDateString()}</p>
+        <p>Next expected period date: ${nextPeriodDate.toDateString()}</p>
+        <p>Days left until next expected period: ${daysLeft > 0 ? daysLeft : 0} days</p>
+      `;
+    }
+
+    // Run the function on page load
+    displayPeriodInfo();
+  </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Check</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      background-image: url('images/healthcheck.png'); /* Replace with an appropriate background image URL */
+      background-size: cover;
+      background-position: center;
+    }
+    header {
+      background-color: #f394c0;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #333;
+    }
+    nav a {
+      color: white;
+      padding: 1rem;
+      text-decoration: none;
+      text-align: center;
+      transition: background-color 0.3s ease;
+    }
+    nav a:hover {
+      background-color: #f52798;
+    }
+    
+    .container {
+      padding: 2rem;
+      max-width: 600px;
+      margin: 2rem auto;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .status {
+      padding: 1.5rem;
+      border-radius: 5px;
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      position: relative;
+      overflow: hidden;
+      background-color: rgba(255, 255, 255, 0.6); /* Set a transparent background */
+    }
+    /* Regular status styling */
+    .status.regular {
+      color: #00695c;
+      font-weight: bold;
+      border: 2px solid #f394c0;
+      animation: fadeIn 1s ease-in-out;
+    }
+    /* Flower sparkle effect */
+    .flower-sparkle {
+      position: background;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .flower-sparkle img {
+      position: background;
+      animation: sparkle 2s ease-in-out infinite;
+      opacity: 0.8;
+      width: 50px;
+      height: 50px;
+    }
+    @keyframes sparkle {
+      0%, 100% { transform: scale(0) rotate(0deg); opacity: 0; }
+      50% { transform: scale(1) rotate(360deg); opacity: 1; }
+    }
+    /* Position sparkle flowers randomly */
+    .flower1 { top: 10%; left: 20%; animation-delay: 0s; }
+    .flower2 { top: 40%; left: 60%; animation-delay: 0.5s; }
+    .flower3 { top: 70%; left: 30%; animation-delay: 1s; }
+    .flower4 { top: 20%; left: 80%; animation-delay: 1.5s; }
+    
+    /* Irregular status styling */
+    .status.irregular {
+      color: #d84315;
+      font-weight: bold;
+      border: 2px solid #f44336;
+      animation: fadeIn 1s ease-in-out;
+    }
+    /* Fade-in effect */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Health Check</h1>
+  </header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="logs.html">Logs</a>
+    <a href="healthtips.html">Health Tips</a>
+    <a href="healthcheckup.html">Health Check</a>
+    <a href="chatbot.html">Chatbot</a>
+  </nav>
+
+  <div class="container">
+    <h2>Period Cycle Status</h2>
+    <div class="status" id="status">
+      <!-- Status of the period cycle with animations will be displayed here -->
+    </div>
+  </div>
+
+  <!-- External JS file inclusion -->
+  <script src="scripts.js"></script>
+  <script>
+    function displayCycleStatus() {
+      const statusElement = document.getElementById("status");
+      const status = calculateCycleStatus(); // Call external function to get status
+
+      if (status.includes("Regular")) {
+        statusElement.classList.add("regular");
+        statusElement.innerHTML = `
+          <p>Congratulations! Your cycle is regular. Keep up the good health!</p>
+          <div class="flower-sparkle">
+            <img src="flower.png" class="flower1" alt="flower">
+            <img src="flower.png" class="flower2" alt="flower">
+            <img src="flower.png" class="flower3" alt="flower">
+            <img src="flower.png" class="flower4" alt="flower">
+          </div>
+          <p>${status}</p>
+        `;
+      } else if (status.includes("Irregular")) {
+        statusElement.classList.add("irregular");
+        statusElement.innerHTML = `
+          <p>Your period cycle seems irregular. Consider following health tips and consult a doctor if needed.</p>
+          <div class="flower-sparkle">
+            <img src="questionmark.png" class="flower1" alt="question mark">
+            <img src="questionmark.png" class="flower2" alt="question mark">
+            <img src="questionmark.png" class="flower3" alt="question mark">
+            <img src="questionmark.png" class="flower4" alt="question mark">
+          </div>
+          <p>${status}</p>
+        `;
+      } else {
+        statusElement.innerHTML = `<p>${status}</p>`;
+      }
+    }
+
+    // Display cycle status on page load
+    displayCycleStatus();
+  </script>
+
+</body>
+</html>

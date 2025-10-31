@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+  <title>Logs</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background-color: #f394c0;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #333;
+    }
+    nav a {
+      color: white;
+      padding: 1rem;
+      text-decoration: none;
+      text-align: center;
+    }
+    nav a:hover {
+      background-color: #f394c0;
+    }
+    .container {
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+    .log-input {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .log-list {
+      margin-top: 1rem;
+      padding: 0;
+      list-style: none;
+    }
+    .log-item {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .delete-btn {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .delete-btn:hover {
+      background-color: #d32f2f;
+    }
+    .calendar {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .month {
+      margin-bottom: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #fff;
+      padding: 1rem;
+    }
+    .month-name {
+      font-size: 1.5rem;
+      color: #f394c0;
+      text-align: center;
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      justify-items: center;
+      margin-top: 20px;
+    }
+    .day {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #e0e0e0;
+      border-radius: 5px;
+    }
+    .highlight {
+      background-color: #f394c0; /* Color for highlighted dates */
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Cycle Logs</h1>
+  </header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="logs.html">Logs</a>
+    <a href="healthtips.html">Health Tips</a>
+    <a href="healthcheckup.html">Health Check</a>
+    <a href="chatbot.html">Chatbot</a>
+  </nav>
+
+  <div class="container">
+    <div class="log-input">
+      <input type="date" id="logDate" required>
+      <button onclick="addLogEntry()">Add Log</button>
+    </div>
+    
+    <ul class="log-list" id="logList">
+      <!-- Logs will be displayed here -->
+    </ul>
+
+    <div class="calendar" id="calendar">
+      <h2>Full Year Calendar</h2>
+      <div id="fullYearCalendar"></div>
+    </div>
+  </div>
+
+  <!-- External JS file inclusion -->
+  <script src="scripts.js"></script>
+  <script>
+    function addLogEntry() {
+      const dateInput = document.getElementById("logDate").value;
+      addLog(dateInput); // Use external function to save log
+      displayLogs();
+    }
+
+    function deleteLog(index) {
+      const logs = getLogs();
+      logs.splice(index, 1); // Remove the log at the specified index
+      localStorage.setItem("logs", JSON.stringify(logs)); // Update logs in localStorage
+      displayLogs(); // Refresh the log display
+    }
+
+    function displayLogs() {
+      const logs = getLogs(); // Get logs from external function
+      const logList = document.getElementById("logList");
+      logList.innerHTML = ""; // Clear existing logs
+
+      logs.forEach((log, index) => {
+        const logItem = document.createElement("li");
+        logItem.classList.add("log-item");
+        
+        const logText = document.createElement("span");
+        logText.innerText = `Log Date: ${log}`;
+        
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add("delete-btn");
+        deleteButton.innerText = "Delete";
+        deleteButton.onclick = () => deleteLog(index);
+
+        logItem.appendChild(logText);
+        logItem.appendChild(deleteButton);
+        logList.appendChild(logItem);
+      });
+      
+      generateYearCalendar(logs);
+    }
+
+    function generateYearCalendar(logs) {
+      const fullYearCalendar = document.getElementById("fullYearCalendar");
+      fullYearCalendar.innerHTML = ""; // Clear existing calendar
+
+      const today = new Date();
+      const currentYear = today.getFullYear(); // Get current year
+
+      const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
+
+      for (let month = 0; month < 12; month++) {
+        const monthDiv = document.createElement("div");
+        monthDiv.classList.add("month");
+        
+        const monthName = document.createElement("div");
+        monthName.classList.add("month-name");
+        monthName.innerText = monthNames[month]; // Use the correct month name from the array
+        monthDiv.appendChild(monthName);
+
+        const calendarGrid = document.createElement("div");
+        calendarGrid.classList.add("calendar-grid");
+
+        const firstDayOfMonth = new Date(currentYear, month, 1);
+        const lastDayOfMonth = new Date(currentYear, month + 1, 0);
+        const daysInMonth = lastDayOfMonth.getDate(); // Total days in the month
+
+        // Add empty boxes for days of the week before the first day of the month
+        for (let i = 0; i < firstDayOfMonth.getDay(); i++) {
+          const emptyBox = document.createElement("div");
+          emptyBox.classList.add("day");
+          calendarGrid.appendChild(emptyBox);
+        }
+
+        // Create the calendar days
+        for (let day = 1; day <= daysInMonth; day++) {
+          const dayBox = document.createElement("div");
+          dayBox.classList.add("day");
+          dayBox.innerText = day;
+
+          // Check if this day is in the logs
+          const logDateString = `${currentYear}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+          if (logs.includes(logDateString)) {
+            dayBox.classList.add("highlight"); // Highlight if in logs
+          }
+
+          calendarGrid.appendChild(dayBox);
+        }
+
+        monthDiv.appendChild(calendarGrid);
+        fullYearCalendar.appendChild(monthDiv);
+      }
+    }
+
+    // Display logs on page load
+    displayLogs();
+  </script>
+</body>
+</html>

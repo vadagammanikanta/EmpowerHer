@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot - Health Portal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background-color: #f394c0;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #333;
+    }
+    nav a {
+      color: white;
+      padding: 1rem;
+      text-decoration: none;
+      text-align: center;
+    }
+    nav a:hover {
+      background-color: #f394c0;
+    }
+    .container {
+      padding: 2rem;
+      text-align: center;
+    }
+    .button-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #f394c0;
+      color: white;
+      cursor: pointer;
+    }
+    .button:hover {
+      background-color: #d180a9;
+    }
+    .chatbox {
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      padding: 1rem;
+      border-radius: 5px;
+      max-width: 600px;
+      margin: auto;
+      text-align: left;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Health Chatbot</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="logs.html">Logs</a>
+    <a href="healthtips.html">Health Tips</a>
+    <a href="healthcheckup.html">Health Check</a>
+    <a href="chatbot.html">Chatbot</a>
+  </nav>
+
+  <div class="container">
+    <h2>Ask Me Anything About Health!</h2>
+    <div class="button-container">
+      <button class="button" onclick="showAnswer('irregular-why', 'Why is my period irregular?')">Why is my period irregular?</button>
+      <button class="button" onclick="showAnswer('irregular-solution', 'How can I get a regular period?')">How can I get a regular period?</button>
+      <button class="button" onclick="showAnswer('food-regular', 'What food can help my cycle stay regular?')">What food can help my cycle stay regular?</button>
+      <button class="button" onclick="showAnswer('food-fast', 'Can I eat fast food?')">Can I eat fast food?</button>
+      <button class="button" onclick="showAnswer('exercise', 'What exercises help with menstrual pain?')">What exercises help with menstrual pain?</button>
+      <button class="button" onclick="showAnswer('stress', 'Does stress affect my cycle?')">Does stress affect my cycle?</button>
+      <button class="button" onclick="showAnswer('hydration', 'Is hydration important for my cycle?')">Is hydration important for my cycle?</button>
+      <button class="button" onclick="showAnswer('sleep', 'How does sleep impact my period?')">How does sleep impact my period?</button>
+      <button class="button" onclick="showAnswer('cramps', 'How can I relieve menstrual cramps?')">How can I relieve menstrual cramps?</button>
+      <button class="button" onclick="showAnswer('birth-control', 'Can birth control regulate periods?')">Can birth control regulate periods?</button>
+      <button class="button" onclick="showAnswer('pcos', 'What is PCOS?')">What is PCOS?</button>
+      <button class="button" onclick="showAnswer('pcod', 'What is PCOD?')">What is PCOD?</button> <!-- New question added -->
+      <button class="button" onclick="showAnswer('pain-relief', 'What are good pain relief methods?')">What are good pain relief methods?</button>
+      <button class="button" onclick="showAnswer('hormones', 'What role do hormones play in my cycle?')">What role do hormones play in my cycle?</button>
+      <button class="button" onclick="showAnswer('diet', 'What is a good diet for my menstrual health?')">What is a good diet for my menstrual health?</button>
+      <button class="button" onclick="showAnswer('tracking', 'Why should I track my period?')">Why should I track my period?</button>
+      <button class="button" onclick="showAnswer('spotting', 'What does spotting mean?')">What does spotting mean?</button>
+      <button class="button" onclick="showAnswer('symptoms', 'What are common PMS symptoms?')">What are common PMS symptoms?</button>
+      <button class="button" onclick="showAnswer('nutrition', 'How does nutrition affect my period?')">How does nutrition affect my period?</button>
+      <button class="button" onclick="showAnswer('meditation', 'Can meditation help with PMS?')">Can meditation help with PMS?</button>
+      <button class="button" onclick="showAnswer('other', 'Ask another question')">Ask another question</button>
+    </div>
+
+    <div class="chatbox" id="chatbox">
+      <p><strong>Chatbot:</strong> Hi! I'm here to help you with your health questions. Click on a button above or ask me anything!</p>
+    </div>
+    
+    <input type="text" id="userInput" placeholder="Type your question here..." style="margin-top: 1rem; width: 80%; padding: 10px;" />
+    <button class="button" onclick="askCustomQuestion()">Ask</button>
+  </div>
+
+  <script>
+    // Attach an event listener to submit on "Enter" key press
+    document.getElementById("userInput").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        askCustomQuestion();
+      }
+    });
+
+    function showAnswer(type, question) {
+      let answer;
+      switch (type) {
+        case 'irregular-why':
+          answer = "Irregular periods can occur due to hormonal imbalances, stress, changes in weight, or health conditions like PCOS.";
+          break;
+        case 'irregular-solution':
+          answer = "Maintaining a balanced diet, regular exercise, and reducing stress can help regulate your period. A healthcare provider can offer personalized advice.";
+          break;
+        case 'food-regular':
+          answer = "Eating healthy fats, whole grains, and lean proteins can support cycle regularity. Foods like nuts, leafy greens, and avocados are beneficial.";
+          break;
+        case 'food-fast':
+          answer = "While occasional fast food is okay, a diet rich in whole foods is essential for menstrual health.";
+          break;
+        case 'exercise':
+          answer = "Light exercises like yoga, walking, and stretching can help relieve menstrual pain.";
+          break;
+        case 'stress':
+          answer = "Yes, stress can affect your cycle by causing delays or even skipped periods. Managing stress can help maintain cycle regularity.";
+          break;
+        case 'hydration':
+          answer = "Staying hydrated can help with bloating and may reduce cramping.";
+          break;
+        case 'sleep':
+          answer = "Quality sleep supports hormone balance, which is important for a regular menstrual cycle.";
+          break;
+        case 'cramps':
+          answer = "Applying heat, gentle massage, and over-the-counter pain relievers can alleviate menstrual cramps.";
+          break;
+        case 'birth-control':
+          answer = "Yes, some types of birth control can help regulate periods. Consult a healthcare provider to discuss options.";
+          break;
+        case 'pcos':
+          answer = "PCOS (Polycystic Ovary Syndrome) is a hormonal disorder that can cause irregular periods, acne, and weight gain.";
+          break;
+        case 'pcod':
+          answer = "PCOD (Polycystic Ovarian Disease) is a condition where the ovaries produce immature or partially mature eggs, often causing hormonal imbalance and irregular periods."; // New answer for PCOD
+          break;
+        case 'pain-relief':
+          answer = "For menstrual pain relief, try heating pads, herbal teas, and light stretching.";
+          break;
+        case 'hormones':
+          answer = "Hormones regulate the menstrual cycle, and imbalances can lead to symptoms like irregular periods or PMS.";
+          break;
+        case 'diet':
+          answer = "A balanced diet with plenty of fruits, vegetables, and healthy fats supports overall menstrual health.";
+          break;
+        case 'tracking':
+          answer = "Tracking your period helps you understand your cycle better, and can alert you to any irregularities.";
+          break;
+        case 'spotting':
+          answer = "Spotting is light bleeding that occurs outside of your normal period and can be due to various reasons, such as hormonal changes.";
+          break;
+        case 'symptoms':
+          answer = "Common PMS symptoms include mood swings, bloating, cramps, and fatigue.";
+          break;
+        case 'nutrition':
+          answer = "Nutrition impacts hormonal balance, so a diet rich in whole foods can help maintain a healthy cycle.";
+          break;
+        case 'meditation':
+          answer = "Meditation and mindfulness can help reduce PMS symptoms by lowering stress levels.";
+          break;
+        case 'other':
+          answer = "Feel free to ask any other question or type your own!";
+          break;
+        default:
+          answer = "I'm here to help! Please choose a question or type your own.";
+      }
+      updateChatbox(`You asked: "${question}"`, answer);
+    }
+
+    function askCustomQuestion() {
+      const userInput = document.getElementById("userInput").value.trim().toLowerCase();
+      let response;
+
+      if (userInput === "") {
+        alert("Please type a question before asking.");
+        return;
+      }
+
+      // Check for greeting messages
+      if (["hi", "hello", "hey"].includes(userInput)) {
+        response = "Hello! I'm a health chatbot here to assist with your health-related questions. How can I help you today?";
+      } else {
+        response = "I'm currently learning to answer custom questions. Stay tuned!";
+      }
+
+      updateChatbox(`You asked: "${userInput}"`, response);
+      document.getElementById("userInput").value = ""; // Clear input field
+    }
+
+    function updateChatbox(userMessage, botResponse) {
+      const chatbox = document.getElementById("chatbox");
+      const userMessageElement = document.createElement("p");
+      userMessageElement.innerHTML = `<strong>User:</strong> ${userMessage}`;
+      const botResponseElement = document.createElement("p");
+      botResponseElement.innerHTML = `<strong>Chatbot:</strong> ${botResponse}`;
+      
+      chatbox.appendChild(userMessageElement);
+      chatbox.appendChild(botResponseElement);
+      chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to the bottom
+    }
+  </script>
+
+</body>
+</html>

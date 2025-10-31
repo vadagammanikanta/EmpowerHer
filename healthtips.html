@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Tips</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background-color: #f394c0;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #333;
+    }
+    nav a {
+      color: white;
+      padding: 1rem;
+      text-decoration: none;
+      text-align: center;
+    }
+    nav a:hover, .category-buttons .selected {
+      background-color: #f394c0;
+    }
+    .container {
+      padding: 2rem;
+      text-align: center;
+    }
+    .tip-image {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .tip-box {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 1.5rem;
+      max-width: 500px;
+      text-align: center;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin: auto;
+    }
+    .tip-box h2 {
+      color: #f394c0;
+    }
+    .button {
+      margin-top: 1rem;
+      padding: 0.5rem 1.5rem;
+      background-color: #f4f4f4;
+      color: #333;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+    }
+    .button:hover, .button.selected {
+      background-color: #f394c0;
+      color: white;
+    }
+    .category-buttons {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .tip-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Health Tips</h1>
+  </header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="logs.html">Logs</a>
+    <a href="healthtips.html">Health Tips</a>
+    <a href="healthcheckup.html">Health Check</a>
+    <a href="chatbot.html">Chatbot</a>
+  </nav>
+
+  <div class="container">
+    <div class="category-buttons">
+      <button id="menstruationButton" class="button selected" onclick="showTips('menstruation')">Menstruation Tips</button>
+      <button id="fitnessButton" class="button" onclick="showTips('fitness')">Fitness Tips</button>
+      <button id="nutritionButton" class="button" onclick="showTips('nutrition')">Nutrition Tips</button>
+    </div>
+    
+    <img id="tipImage" class="tip-image" src="healthtips.PNG" alt="Menstruation Tips Image" />
+
+    <div class="tip-box" id="tipBox">
+      <h2 id="tipTitle">Menstruation Health Tips</h2>
+      <p id="tipText">Stay hydrated. Drinking enough water helps prevent bloating and reduce cramps.</p>
+      <div class="tip-buttons">
+        <button class="button" onclick="previousTip()">Previous</button>
+        <button class="button" onclick="nextTip()">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const tips = {
+      menstruation: [
+        "Stay hydrated. Drinking enough water helps prevent bloating and reduce cramps.",
+        "Exercise regularly. Gentle exercises like walking can help reduce period discomfort.",
+        "Eat a balanced diet. Include foods rich in iron, such as spinach, to replenish iron lost during menstruation.",
+        "Get enough sleep. Aim for at least 7-8 hours to help manage stress and regulate hormones.",
+        "Avoid caffeine. Caffeine can worsen period symptoms, so try to limit coffee and soda."
+      ],
+      fitness: [
+        "Engage in at least 150 minutes of moderate aerobic exercise each week.",
+        "Incorporate strength training exercises at least twice a week.",
+        "Stretch regularly to improve flexibility and reduce injury risk.",
+        "Stay active throughout the day; consider walking or biking instead of driving.",
+        "Listen to your body; rest when you need to avoid burnout."
+      ],
+      nutrition: [
+        "Eat plenty of fruits and vegetables for essential vitamins and minerals.",
+        "Incorporate whole grains into your diet for added fiber and nutrients.",
+        "Choose lean protein sources, such as chicken, fish, and legumes.",
+        "Limit added sugars and saturated fats for better health.",
+        "Stay mindful of portion sizes to maintain a healthy weight."
+      ]
+    };
+    
+    const images = {
+      menstruation: "menstruation.jpg",
+      fitness: "fitness.jpg",
+      nutrition: "nutrition.jpg"
+    };
+    
+    let currentCategory = 'menstruation';
+    let tipIndex = 0;
+
+    function showTips(category) {
+      currentCategory = category;
+      tipIndex = 0; // Reset tip index
+
+      // Update the selected button styling
+      document.querySelectorAll(".button").forEach(button => button.classList.remove("selected"));
+      document.getElementById(`${category}Button`).classList.add("selected");
+
+      // Update the tip content and image
+      document.getElementById("tipTitle").innerText = capitalizeFirstLetter(category) + " Tips";
+      document.getElementById("tipText").innerText = tips[category][tipIndex];
+      document.getElementById("tipImage").src = images[category];
+      document.getElementById("tipImage").alt = capitalizeFirstLetter(category) + " Tips Image";
+    }
+
+    function nextTip() {
+      tipIndex = (tipIndex + 1) % tips[currentCategory].length; // Loop back to the first tip after the last one
+      document.getElementById("tipText").innerText = tips[currentCategory][tipIndex];
+    }
+
+    function previousTip() {
+      tipIndex = (tipIndex - 1 + tips[currentCategory].length) % tips[currentCategory].length; // Loop back to the last tip if at the beginning
+      document.getElementById("tipText").innerText = tips[currentCategory][tipIndex];
+    }
+
+    function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    // Initialize the page with menstruation tips
+    showTips('menstruation');
+  </script>
+
+</body>
+</html>
