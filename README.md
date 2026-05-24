@@ -2,7 +2,7 @@
 
 EmpowerHer is a modern, high-fidelity full-stack web application designed to support women's reproductive health, cycle tracking, and physical wellness. This application transforms typical period tracking into an interactive experience featuring mathematical cycle regularity analysis, clinical physical guidelines, and a dynamic medical AI copilot powered by **Google Gemini**.
 
-![EmpowerHer Banner](https://images.unsplash.com/photo-1518495973542-4542c06a5843?q=80&w=1000&auto=format&fit=crop)
+
 
 ---
 
