@@ -1,0 +1,8 @@
+{
+  "name": "EmpowerHer",
+  "description": "A comprehensive period, health, and cycle tracker featuring personalized insights, medical guidelines, and a smart AI chatbot powered by Google Gemini.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
