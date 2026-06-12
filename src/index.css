@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;850&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -6,13 +6,164 @@
   --font-display: "Space Grotesk", sans-serif;
 }
 
-body {
-  font-family: var(--font-sans);
-  background-color: #fcfbfb;
-  color: #1e1b1c;
+/* =============================================
+   DARK MODE CSS VARIABLES
+   ============================================= */
+:root {
+  --bg-primary: #fcfbfb;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --bg-muted: #f8f8f8;
+  --text-primary: #1e1b1c;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --border-color: #e5e7eb;
+  --border-muted: #f3f4f6;
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.08);
+  --shadow-md: 0 4px 12px 0 rgb(0 0 0 / 0.08);
 }
 
-/* Clean, modern scrollbars */
+.dark {
+  --bg-primary: #0f0d0e;
+  --bg-secondary: #1a1618;
+  --bg-card: #1e1a1c;
+  --bg-muted: #252022;
+  --text-primary: #f5f0f2;
+  --text-secondary: #a89ba0;
+  --text-muted: #6b5f63;
+  --border-color: #2e292b;
+  --border-muted: #252022;
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 12px 0 rgb(0 0 0 / 0.4);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* =============================================
+   DARK MODE UTILITY OVERRIDES
+   ============================================= */
+.dark .dark-card {
+  background-color: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+.dark .dark-muted {
+  background-color: var(--bg-muted);
+}
+
+/* =============================================
+   ANIMATED GRADIENT KEYFRAMES
+   ============================================= */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float-up {
+  0% { transform: translateY(0px) scale(1); opacity: 0.6; }
+  50% { transform: translateY(-12px) scale(1.05); opacity: 1; }
+  100% { transform: translateY(0px) scale(1); opacity: 0.6; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* =============================================
+   ANIMATION CLASSES
+   ============================================= */
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 6s ease infinite;
+}
+
+.animate-float {
+  animation: float-up 4s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.35s ease-out forwards;
+}
+
+/* =============================================
+   GLASSMORPHISM UTILITY
+   ============================================= */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.dark .glass {
+  background: rgba(30, 26, 28, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(244, 63, 94, 0.1);
+  box-shadow: 0 4px 24px rgba(244, 63, 94, 0.05), 0 1px 4px rgba(0,0,0,0.04);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.glass-card:hover {
+  box-shadow: 0 8px 32px rgba(244, 63, 94, 0.1), 0 2px 8px rgba(0,0,0,0.06);
+  transform: translateY(-2px);
+}
+
+.dark .glass-card {
+  background: rgba(30, 26, 28, 0.85);
+  border: 1px solid rgba(244, 63, 94, 0.12);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+}
+
+.dark .glass-card:hover {
+  box-shadow: 0 8px 32px rgba(244, 63, 94, 0.15), 0 2px 8px rgba(0,0,0,0.4);
+}
+
+/* =============================================
+   SHIMMER SKELETON LOADING
+   ============================================= */
+.shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.dark .shimmer {
+  background: linear-gradient(90deg, #252022 25%, #2e292b 50%, #252022 75%);
+  background-size: 200% 100%;
+}
+
+/* =============================================
+   CUSTOM SCROLLBARS
+   ============================================= */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -26,4 +177,50 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #f43f5e50;
+}
+
+/* =============================================
+   SMOOTH TRANSITIONS
+   ============================================= */
+*, *::before, *::after {
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
+button, a, input, textarea, select {
+  transition-duration: 0.15s;
+}
+
+/* =============================================
+   PROGRESS BAR ANIMATION
+   ============================================= */
+@keyframes progress-fill {
+  from { width: 0%; }
+  to { width: var(--progress-width); }
+}
+
+.progress-bar {
+  animation: progress-fill 1s ease-out forwards;
+}
+
+/* =============================================
+   TYPING DOTS ANIMATION
+   ============================================= */
+@keyframes typing-dot {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-6px); }
+}
+
+.typing-dot:nth-child(1) { animation: typing-dot 1.2s infinite 0s; }
+.typing-dot:nth-child(2) { animation: typing-dot 1.2s infinite 0.2s; }
+.typing-dot:nth-child(3) { animation: typing-dot 1.2s infinite 0.4s; }
+
+/* =============================================
+   HERO GRADIENT ANIMATION
+   ============================================= */
+.hero-gradient {
+  background: linear-gradient(135deg, #ec4899, #f43f5e, #fb7185, #e11d48);
+  background-size: 300% 300%;
+  animation: gradient-shift 8s ease infinite;
 }
