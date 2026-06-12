@@ -1,40 +1,41 @@
 # EmpowerHer: Your Intelligent Period & Cycle Companion
 
-EmpowerHer is a modern, high-fidelity full-stack web application designed to support women's reproductive health, cycle tracking, and physical wellness. This application transforms typical period tracking into an interactive experience featuring mathematical cycle regularity analysis, clinical physical guidelines, and a dynamic medical AI copilot powered by **Google Gemini**.
+🚀 **Live Demo:** [https://empowerher-o3bw.onrender.com/](https://empowerher-o3bw.onrender.com/)
 
-
+EmpowerHer is a modern, high-fidelity full-stack web application designed to support women's reproductive health, cycle tracking, and physical wellness. This application transforms typical period tracking into an interactive experience featuring mathematical cycle regularity analysis, physical guidelines, and a ultra-fast medical AI copilot powered by **Groq** (with a **Google Gemini** fallback).
 
 ---
 
 ## 🌟 Core Features
 
--   **Dynamic Cycle Dashboard:** Keeps track of your reproductive rhythm. It computes chronological distance calculations, highlights milestones, and renders a visually engaging SVG progress countdown circle illustrating cycle completions.
--   **Cycle Logs & 12-Month Calendar Grid:** Log cycle start dates, flow levels, matching physical symptoms (bloating, cramps, fatigue, etc.), and custom personal notes. Features a fully custom 12-Month Calendar that highlights logged dates.
--   **Clinical Cycle Regularity Checks:** Evaluates logged intervals and variance against standard clinical parameters (typical 21-35 day durations with <= 5 days of variance) to inform you of regular or irregular cycle configurations, accompanied by high-contrast visual status boards.
--   **Specialist Health Guidelines:** Category-oriented carousels (Menstruation tips, Fitness loops, and Nutrition menus) packed with medical wellness strategies.
--   **Gemini-Powered AI Chatbot:** Multi-turn educational discussion partner. Ask customizable free-text symptoms queries or click fast-action buttons for instantaneous clinical summaries.
+- **Dynamic Cycle Dashboard:** Keeps track of your reproductive rhythm. It computes chronological distance calculations, highlights milestones, and renders a visually engaging SVG progress countdown circle illustrating cycle completions.
+- **Cycle Logs & 12-Month Calendar Grid:** Log cycle start dates, flow levels, matching physical symptoms (bloating, cramps, fatigue, etc.), and custom personal notes. Features a fully custom 12-Month Calendar that highlights logged dates.
+- **Clinical Cycle Regularity Checks:** Evaluates logged intervals and variance against standard clinical parameters (typical 21-35 day durations with <= 5 days of variance) to inform you of regular or irregular cycle configurations, accompanied by high-contrast visual status boards.
+- **Specialist Health Guidelines:** Category-oriented carousels (Menstruation tips, Fitness loops, and Nutrition menus) packed with medical wellness strategies.
+- **Groq-Powered AI Chatbot:** Multi-turn educational discussion partner. Ask customizable free-text symptoms queries or click fast-action buttons for instantaneous clinical summaries.
+- **Premium Aesthetics:** Sleek design supporting responsive layouts, dark/light modes, and frosted glass components.
 
 ---
 
 ## 🛠️ The Tech Stack
 
--   **Frontend:** React 19, TypeScript, Tailwind CSS, Lucide icons, ES Modules.
--   **Backend:** Express.js, TypeScript, Node.js.
--   **Database:** MongoDB Atlas (Mongoose Object Modeling) with built-in zero-config local JSON file fallback (`data_db.json`) for effortless development preview.
--   **Artificial Intelligence:** Google Gemini AI Model (via `@google/genai` TypeScript SDK).
--   **Bundler & Builder:** Vite + Esbuild.
+- **Frontend:** React 19, JavaScript (ES Modules), Tailwind CSS v4, Lucide icons.
+- **Backend:** Express.js, Node.js.
+- **Database:** MongoDB Atlas (Mongoose Object Modeling) with built-in zero-config local JSON file fallback (`data_db.json`) for effortless development preview.
+- **Artificial Intelligence:** Groq API (default model: `llama-3.3-70b-versatile`) for ultra-low latency responses, with automatic fallback to **Google Gemini API** (`gemini-1.5-flash`).
+- **Bundler & Builder:** Vite + Express Dev Server.
 
 ---
 
 ## 🛫 Setup & Installation
 
 ### Prerequisite Checklist
-Make sure you have Node.js (version 18+) and MongoDB installed locally, or secure a free database cluster on **MongoDB Atlas**.
+Make sure you have Node.js (version 18+) installed. MongoDB is optional (falls back to local file storage if not configured).
 
 ### 1. Clone the Repository
 ```bash
-git clone <your-repository-url>
-cd empowerher
+git clone https://github.com/vadagammanikanta/EmpowerHer.git
+cd EmpowerHer
 ```
 
 ### 2. Install Dependencies
@@ -49,11 +50,14 @@ Create a `.env` file in the root directory and add the following config keys:
 # Server Ingress Port (Optional - defaults to 3000)
 PORT=3000
 
-# Google Gemini API Key (Required for AI Chatbot)
-GEMINI_API_KEY="YOUR_ACTUAL_GEMINI_API_KEY"
+# Groq API Key (Preferred for ultra-fast AI Chatbot)
+GROQ_API_KEY="YOUR_GROQ_API_KEY"
 
-# MongoDB Connection String (Required for Cloud Database)
-MONGODB_URI="mongodb+srv://<username>:<password>@cluster0.abcde.mongodb.net/empowerher?retryWrites=true&w=majority"
+# Google Gemini API Key (Optional fallback)
+GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
+
+# MongoDB Connection String (Optional - falls back to data_db.json if empty)
+MONGODB_URI="mongodb+srv://<username>:<password>@cluster0.abcde.mongodb.net/empowerher"
 ```
 
 ---
@@ -71,19 +75,15 @@ Open your browser and navigate to `http://localhost:3000`.
 
 ## 📦 Production Build & Deployment
 
-For deployment (e.g., heroku, render, digitalocean, cloud run), use the automated bundler configured in `package.json`:
+For deployment (e.g., Render, Railway, VPS), use the automated builder configured in `package.json`:
 
 ```bash
-# Compiles React static files and bundles Express utilizing Esbuild into CJS
+# Compiles React static files into /dist
 npm run build
 
-# Boots the production-ready server
+# Boots the production-ready Express server (which hosts the compiled static files)
 npm start
 ```
-
-### Production Bundling Workflow
--   `npm run build` runs the standard Vite command resulting in high-density web assets inside `/dist`.
--   It uses **esbuild** to compile `server.ts` into a fully bundled, production-hardened CommonJS module named `/dist/server.cjs`. This avoids ES Module path resolution errors on remote machines.
 
 ---
 
